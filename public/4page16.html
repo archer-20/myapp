@@ -1,23 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>View Details</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirm Your Details</title>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdfdfd;
+      color: #111;
+      margin: 0;
+      padding: 0;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 20px 25px;
+      margin-bottom: 30px;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 1.6em;
+      color: #d15533;
+    }
+
+    .vehicle-info {
+      font-size: 1.2em;
+      margin: 10px 0 0;
+      color: #333;
+    }
+
+    .vehicle-info strong {
+      font-weight: bold;
+      color: #000;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1em;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="file"] {
+      width: calc(100% - 90px);
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    input[readonly] {
+      color: #666;
+      background-color: #eee;
+      cursor: not-allowed;
+    }
+
+    .file-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-wrapper button {
+      padding: 8px 12px;
+      background-color: #eee;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #d15533;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #b14426;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #previewPopup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 999;
+      display: none;
+    }
+
+    #previewPopup img {
+      max-width: 100%;
+      max-height: 500px;
+    }
+
+    .footer {
+      background-color: #fff;
+      border-top: 1px solid #eee;
+      padding: 40px 20px;
+      margin-top: 80px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .footer-column {
+      flex: 1 1 200px;
+      margin: 10px;
+    }
+
+    .footer-column h4 {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 8px;
+    }
+
+    .brand {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand img {
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    #ocrResult {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h2>Your Entered Information</h2>
-  <label>Phone Number:</label>
-  <input id="mobile" readonly><br>
-  <label>Name as per RC:</label>
-  <input id="rcname" readonly>
+  <div class="container">
+    <div class="card">
+      <h2>Confirm Your Details</h2>
+      <div class="vehicle-info">
+        Vehicle No. <strong>WB 68 J 8658</strong><br>
+        <strong>1 Year Third Party ₹784</strong>
+      </div>
+    </div>
+
+    <form id="confirmForm" onsubmit="return validateDocument(event)">
+      <div class="card">
+        <div class="form-group">
+          <label for="mobile">Mobile No.</label>
+          <input type="text" id="mobile" value="9876543210" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="rcname">Name as per RC</label>
+          <input type="text" id="rcname" value="Tithi Roy" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" value="tithi@example.com" readonly>
+        </div>
+
+        <button type="button" onclick="showPanAndValidation()">Next</button>
+      </div>
+
+      <div id="extraFields" class="card hidden">
+        <div class="form-group">
+          <label for="pan">PAN No.</label>
+          <input type="text" id="pan" placeholder="Enter your PAN" maxlength="10" oninput="formatPan(this)">
+        </div>
+
+        <div class="form-group">
+          <label for="idProof">Upload Identity Proof</label>
+          <div class="file-wrapper">
+            <input type="file" id="idProof" accept="image/*" onchange="previewImage(event)">
+            <button type="button" onclick="triggerCamera()">📸</button>
+            <button type="button" onclick="togglePreview()">Preview</button>
+          </div>
+        </div>
+
+        <button type="submit">Validate</button>
+      </div>
+    </form>
+
+    <p id="ocrResult"></p>
+  </div>
+
+  <!-- Image Preview Modal -->
+  <div id="previewPopup">
+    <img id="previewImage" src="" alt="Preview"/>
+    <br><br>
+    <button onclick="togglePreview()">Close</button>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <div class="brand">
+          <img src="logo12.png" alt="Logo">
+          myMotorPolicy
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4>About</h4>
+        <ul>
+          <li>Team</li>
+          <li>History</li>
+          <li>Careers</li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Privacy</h4>
+        <ul>
+          <li>Privacy Policy</li>
+          <li>Terms and Conditions</li>
+          <li>Contact Us</li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Social</h4>
+        <ul>
+          <li>Instagram</li>
+          <li>Twitter/X</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 
   <script>
-    fetch('/data')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('mobile').value = data.phone;
-        document.getElementById('rcname').value = data.rc;
-      });
+    function showPanAndValidation() {
+      document.getElementById("extraFields").classList.remove("hidden");
+    }
+
+    function formatPan(input) {
+      const value = input.value.toUpperCase();
+      let formatted = '';
+      const pattern = /^[A-Z]{0,5}[0-9]{0,4}[A-Z]?$/;
+
+      if (!pattern.test(value)) {
+        input.value = input.value.slice(0, -1);
+        return;
+      }
+
+      input.value = value;
+    }
+
+    async function validateDocument(event) {
+      event.preventDefault();
+      const rcName = document.getElementById("rcname").value.toLowerCase();
+      const file = document.getElementById("idProof").files[0];
+
+      if (!file) {
+        alert("Please upload a document to validate.");
+        return false;
+      }
+
+      const reader = new FileReader();
+      reader.onload = async function () {
+        const result = await Tesseract.recognize(reader.result, 'eng');
+        const extractedText = result.data.text.toLowerCase();
+
+        if (extractedText.includes(rcName)) {
+          document.getElementById("ocrResult").style.color = "green";
+          document.getElementById("ocrResult").innerText = "Name matches. Identity successfully validated!";
+        } else {
+          document.getElementById("ocrResult").style.color = "red";
+          document.getElementById("ocrResult").innerText = "Name does not match the identity proof. Please check and upload again.";
+        }
+      };
+      reader.readAsDataURL(file);
+
+      return false;
+    }
+
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("previewImage").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function togglePreview() {
+      const popup = document.getElementById("previewPopup");
+      popup.style.display = (popup.style.display === "none" || popup.style.display === "") ? "block" : "none";
+    }
+
+    function triggerCamera() {
+      const input = document.getElementById("idProof");
+      input.setAttribute("capture", "environment");
+      input.click();
+    }
   </script>
+
+<script>
+  fetch('/data')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('mobile').value = data.phone;
+      document.getElementById('rcname').value = data.rc;
+    });
+</script>
+
 </body>
 </html>
