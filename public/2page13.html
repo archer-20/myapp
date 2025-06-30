@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enter Phone and Name</title>
+</head>
+<body>
+  <h2>Enter Details</h2>
+  <input id="phone" type="text" placeholder="Phone Number">
+  <input id="rc" type="text" placeholder="Name As Per RC">
+  <button onclick="saveAndContinue()">Continue →</button>
+
+  <script>
+    function saveAndContinue() {
+      const phone = document.getElementById('phone').value;
+      const rc = document.getElementById('rc').value;
+      const vehicle = localStorage.getItem("vehicle");
+
+      fetch('/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, rc, vehicle })
+      }).then(() => window.location.href = "/4page16.html");
+    }
+  </script>
+</body>
+</html>
