@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Details</title>
+</head>
+<body>
+  <h2>Your Entered Information</h2>
+  <label>Phone Number:</label>
+  <input id="mobile" readonly><br>
+  <label>Name as per RC:</label>
+  <input id="rcname" readonly>
+
+  <script>
+    fetch('/data')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('mobile').value = data.phone;
+        document.getElementById('rcname').value = data.rc;
+      });
+  </script>
+</body>
+</html>
