@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Insurance</title>
+</head>
+<body>
+  <h1>Insurance Page</h1>
+  <input id="vehicle" type="text" placeholder="Vehicle No..">
+  <button onclick="goToStep2()">View Policy Price</button>
+
+  <script>
+    function goToStep2() {
+      const vehicle = document.getElementById('vehicle').value.trim();
+      localStorage.setItem("vehicle", vehicle);
+      window.location.href = "/2page13.html";
+    }
+  </script>
+</body>
+</html>
