@@ -5,10 +5,7 @@
   <title>Insurance Page 3D</title>
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Georgia', serif;
       margin: 0;
@@ -17,13 +14,9 @@
       color: white;
       overflow-x: hidden;
     }
-
     .parallax-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100%;
+      position: fixed; top: 0; left: 0;
+      height: 100vh; width: 100%;
       z-index: -1;
       background: linear-gradient(120deg, #000428, #004e92, #000428);
       background-size: 600% 600%;
@@ -32,311 +25,135 @@
       opacity: 0.8;
       pointer-events: none;
     }
-
     @keyframes moveBackground {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     header {
       position: relative;
-      background: url('https://www.bajajallianz.com/blog/wp-content/uploads/2022/08/is-bike-insurance-policy-going-to-cover-the-full-two-wheeler.jpg') no-repeat center center/cover;
+      background: url('https://www.bajajallianz.com/blog/wp-content/uploads/2022/08/is-bike-insurance-policy-going-to-cover-the-full-two-wheeler.jpg')
+                  no-repeat center center/cover;
       color: white;
       text-align: center;
       padding: 100px 20px 60px;
       height: 100vh;
-      overflow: hidden;
       z-index: 1;
     }
-
     header::before {
       content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(0px);
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(0);
       transition: backdrop-filter 0.4s ease;
       z-index: 0;
     }
-
-    body.scrolled header::before {
-      backdrop-filter: blur(8px);
-    }
-
+    body.scrolled header::before { backdrop-filter: blur(8px); }
     header * {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
       transform: translateZ(20px);
       will-change: transform;
     }
-
     .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
+      position: absolute; bottom: 30px; left: 50%;
       transform: translateX(-50%);
-      z-index: 2;
       animation: bounce 2s infinite;
+      z-index: 2;
     }
-
-    .scroll-indicator svg {
-      width: 30px;
-      height: 30px;
-      fill: white;
-    }
-
+    .scroll-indicator svg { width: 30px; height: 30px; fill: white; }
     @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
+      0%,100% { transform: translateX(-50%) translateY(0); }
       50% { transform: translateX(-50%) translateY(10px); }
     }
-
     input[type="text"] {
-      padding: 12px;
-      font-size: 16px;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      width: 250px;
-      margin-bottom: 20px;
+      padding: 12px; font-size: 16px;
+      border: 2px solid #fff; border-radius: 10px;
+      width: 250px; margin-bottom: 20px;
       background-color: rgba(255,255,255,0.9);
       color: #000;
     }
-
     .policy-btn {
-      background-color: #0C68A7;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-left: 10px;
+      background-color: #0C68A7; color: #fff;
+      border: none; padding: 10px 20px;
+      border-radius: 20px; cursor: pointer;
+      font-weight: bold; margin-left: 10px;
       animation: glow 1.5s infinite alternate;
       transition: transform 0.3s;
     }
-
     .insurance-types, .policy-options {
-      margin: 20px 0;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
+      margin: 20px 0; display: flex;
+      justify-content: center; flex-wrap: wrap; gap: 15px;
     }
-
     .insurance-types button, .policy-options button {
-      background-color: #022B57;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 15px;
-      animation: glow 1.5s infinite alternate;
+      background-color: #022B57; color: white;
+      padding: 12px 20px; border: none;
+      border-radius: 25px; cursor: pointer;
+      font-size: 15px; animation: glow 1.5s infinite alternate;
       transition: transform 0.3s ease;
     }
-
     @keyframes glow {
-      from {
-        box-shadow: 0 0 5px #0C68A7, 0 0 10px #0C68A7;
-      }
-      to {
-        box-shadow: 0 0 10px #0C68A7, 0 0 20px #0C68A7;
-      }
+      from { box-shadow: 0 0 5px #0C68A7, 0 0 10px #0C68A7; }
+      to   { box-shadow: 0 0 10px #0C68A7, 0 0 20px #0C68A7; }
     }
-
-    .motor-insurance-text {
-      color: #fff;
-      font-size: 32px;
-      margin-top: 30px;
-    }
-
-    .discount-text {
-      color: #ddd;
-      font-size: 14px;
-      margin-bottom: 40px;
-    }
-
-    .logo {
-      width: 80px;
-      margin-bottom: 20px;
-    }
-
-    .section-title {
-      font-size: 32px;
-      color: #0C68A7;
-      margin-bottom: 30px;
-    }
-
+    .motor-insurance-text { color: #fff; font-size: 32px; margin-top: 30px; }
+    .discount-text { color: #ddd; font-size: 14px; margin-bottom: 40px; }
+    .logo { width: 80px; margin-bottom: 20px; }
+    .section-title { font-size: 32px; color: #0C68A7; margin-bottom: 30px; }
     section {
-      text-align: center;
-      padding: 60px 20px;
-      background-color: #000;
-      position: relative;
-      z-index: 2;
+      text-align: center; padding: 60px 20px;
+      background-color: #000; position: relative; z-index: 2;
     }
-
     .features {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 30px;
-      margin-bottom: 40px;
+      display: flex; justify-content: space-around;
+      flex-wrap: wrap; gap: 30px; margin-bottom: 40px;
     }
-
     .feature {
-      background-color: #111;
-      border-radius: 15px;
-      padding: 30px 20px;
-      width: 280px;
+      background-color: #111; border-radius: 15px;
+      padding: 30px 20px; width: 280px;
       transition: transform 0.3s ease, box-shadow 0.3s;
-      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 12px rgba(255,255,255,0.05);
     }
-
     .feature:hover {
       transform: perspective(600px) rotateX(5deg) scale(1.05);
-      box-shadow: 0 12px 30px rgba(12, 104, 167, 0.4);
+      box-shadow: 0 12px 30px rgba(12,104,167,0.4);
     }
-
-    .feature h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: #0C68A7;
-    }
-
-    .feature p {
-      color: #ccc;
-      font-size: 14px;
-    }
-
-    .tools-title {
-      font-size: 28px;
-      color: #0C68A7;
-      margin-bottom: 30px;
-    }
-
+    .feature h3 { font-size: 20px; color: #0C68A7; margin-bottom: 10px; }
+    .feature p { color: #ccc; font-size: 14px; }
+    .tools-title { font-size: 28px; color: #0C68A7; margin-bottom: 30px; }
     .tools {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      flex-wrap: wrap;
+      display: flex; justify-content: center;
+      gap: 60px; flex-wrap: wrap;
     }
-
     .tool-item {
-      font-size: 18px;
-      font-weight: 500;
-      color: #ccc;
+      font-size: 18px; font-weight: 500; color: #ccc;
       transition: transform 0.3s ease;
     }
-
     .tool-item:hover {
       transform: perspective(600px) rotateY(5deg) scale(1.05);
       color: #fff;
     }
-
     .app-section {
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-start;
-      padding: 60px 5%;
-      flex-wrap: wrap;
-      background-color: #111;
+      display: flex; justify-content: space-around;
+      align-items: flex-start; padding: 60px 5%;
+      flex-wrap: wrap; background-color: #111;
     }
-
-    .app-left, .app-right {
-      flex: 1;
-      min-width: 300px;
-      margin: 20px;
-    }
-
-    .app-left h1 {
-      color: #d9534f;
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-
+    .app-left, .app-right { flex: 1; min-width: 300px; margin: 20px; }
+    .app-left h1 { color: #d9534f; font-size: 36px; margin-bottom: 20px; }
     .app-left ul {
-      list-style-type: disc;
-      color: #fff;
-      padding-left: 20px;
-      font-size: 18px;
-      line-height: 1.3;
+      list-style-type: disc; color: #fff;
+      padding-left: 20px; font-size: 18px; line-height: 1.3;
     }
-
-    .app-left ul li {
-      margin-bottom: 8px;
-    }
-
-    .app-center img {
-      max-width: 250px;
-      border-radius: 10px;
-    }
-
-    .qr-code {
-      max-width: 140px;
-      margin-bottom: 10px;
-    }
-
-    .store-buttons img {
-      width: 180px;
-      margin: 10px auto;
-      display: block;
-    }
-
-    footer {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      background-color: #000;
-      padding: 40px 5%;
-      color: #ccc;
-    }
-
-    footer div {
-      min-width: 150px;
-      margin: 10px;
-    }
-
-    footer h3 {
-      margin-bottom: 10px;
-      font-size: 18px;
-      color: #fff;
-    }
-
-    footer p, footer a {
-      margin: 4px 0;
-      color: #ccc;
-      text-decoration: none;
-    }
-
-    .footer-logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .footer-logo img {
-      height: 30px;
-      margin-right: 10px;
-    }
-
-    .footer-logo span {
-      font-weight: bold;
-      font-size: 20px;
-    }
-
+    .app-left ul li { margin-bottom: 8px; }
+    .app-center img { max-width: 250px; border-radius: 10px; }
+    .qr-code { max-width: 140px; margin-bottom: 10px; }
+    .store-buttons img { width: 180px; margin: 10px auto; display: block; }
     @media (max-width: 768px) {
-      .feature {
-        width: 90%;
-      }
+      .feature { width: 90%; }
     }
-
     .insurance-types button:hover,
     .policy-options button:hover,
     .policy-btn:hover {
-      opacity: 0.9;
-      transform: scale(1.05);
+      opacity: 0.9; transform: scale(1.05);
     }
   </style>
 </head>
@@ -372,7 +189,6 @@
   <section data-aos="fade-up">
     <img src="https://seeklogo.com/images/T/tata-aig-logo-89A1450A02-seeklogo.com.png" alt="Tata AIG Logo" class="logo">
     <div class="section-title">Why choose us?</div>
-
     <div class="features">
       <div class="feature" data-aos="fade-right">
         <h3>Super-Simple Claims</h3>
@@ -387,7 +203,6 @@
         <p>No hidden charges, same product with low price.</p>
       </div>
     </div>
-
     <div class="tools-title" data-aos="zoom-in">Tools & Calculators to Simplify Your Life!</div>
     <div class="tools">
       <div class="tool-item" data-aos="fade-up">Tax-related Calculators</div>
@@ -406,11 +221,9 @@
         <li>Manage all policies across all companies in a single vault</li>
       </ul>
     </div>
-
     <div class="app-center" data-aos="zoom-in">
       <img src="https://i.imgur.com/hT6Qfov.png" alt="App preview">
     </div>
-
     <div class="app-right" data-aos="fade-left">
       <img class="qr-code" src="https://i.imgur.com/EWk3kxL.png" alt="QR code">
       <div class="store-buttons">
@@ -420,52 +233,61 @@
     </div>
   </section>
 
-  <footer data-aos="fade-up">
-    <div class="footer-logo">
-      <img src="logo5.png" alt="myMotorPolicy Logo">
-      <span>myMotorPolicy</span>
+  <!-- Corrected Footer -->
+  <footer style="background-color: #002147; color: white; padding: 50px 20px; font-family: 'Georgia', serif;">
+    <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px;">
+      <div style="min-width: 250px;">
+        <h3 style="font-size: 20px; font-weight: bold; margin-bottom: 20px;">MyMotorPolicy</h3>
+        <p>📧 <a href="mailto:care@mymotorpolicy.com" style="color: white; text-decoration: none;">care@mymotorpolicy.com</a></p>
+        <p>📄 CIN/Registration No.</p>
+        <p>1234 Park Street,<br>Kolkata, 700016</p>
+        <p>📞 <a href="tel:+919876543210" style="color: white; text-decoration: none;">+91-9876543210</a></p>
+      </div>
+      <div style="min-width: 200px;">
+        <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Useful Links</h3>
+        <p><a href="#" style="color:white; text-decoration:none;">Home</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">Renew Policy</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">Buy New Policy</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">Check Policy Status</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">Claim Assistance</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">Contact Us</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">Agent Login</a></p>
+      </div>
+      <div style="min-width: 200px;">
+        <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Legal & Policy</h3>
+        <p><a href="#" style="color:white; text-decoration:none;">Terms & Conditions</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">Privacy Policy</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">Cancellation & Refund Policy</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">Grievance Redressal</a></p>
+        <p><a href="#" style="color:white; text-decoration:none;">IRDAI License Info</a></p>
+      </div>
     </div>
-    <div>
-      <h3>About</h3>
-      <p>Team</p>
-      <p>History</p>
-      <p>Careers</p>
-    </div>
-    <div>
-      <h3>Privacy</h3>
-      <p>Privacy Policy</p>
-      <p>Terms and Conditions</p>
-      <p>Contact Us</p>
-    </div>
-    <div>
-      <h3>Social</h3>
-      <p>Instagram</p>
-      <p>Twitter/X</p>
+    <hr style="border-color: #1a3b5c; margin: 40px auto 20px; width: 90%;">
+    <div style="text-align: center;">
+      <div style="margin-bottom: 15px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" style="height: 40px; margin: 0 8px; vertical-align: middle;">
+        <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook--v1.png" alt="Facebook" style="margin: 0 10px; vertical-align: middle;">
+        <img src="https://img.icons8.com/ios-filled/24/ffffff/twitterx.png" alt="Twitter" style="margin: 0 10px; vertical-align: middle;">
+        <span style="margin: 0 15px;">✅ 100% Secure Payment</span>
+        <span style="margin: 0 15px;">🔒 SSL</span>
+        <span style="margin: 0 15px;">✔️ Mdse</span>
+      </div>
+      <div style="font-size: 14px; color: #ccc;">© 2024 MyMotorPolicy. All rights reserved.</div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({ duration: 1000, once: false });
-
     window.addEventListener('scroll', () => {
-      const body = document.body;
-      if (window.scrollY > 50) {
-        body.classList.add('scrolled');
-      } else {
-        body.classList.remove('scrolled');
-      }
+      document.body.classList.toggle('scrolled', window.scrollY > 50);
     });
+    function goToStep2() {
+      const v = document.getElementById('vehicle').value.trim();
+      localStorage.setItem('vehicle', v);
+      window.location.href = '/2page13.html';
+    }
   </script>
-
-
-<script>
-  function goToStep2() {
-    const vehicle = document.getElementById('vehicle').value.trim();
-    localStorage.setItem("vehicle", vehicle);
-    window.location.href = "/2page13.html";
-  }
-</script>
 
 </body>
 </html>
