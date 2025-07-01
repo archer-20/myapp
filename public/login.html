@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body { font-family: sans-serif; padding: 40px; max-width: 400px; margin: auto; }
+    input, button { padding: 10px; width: 100%; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Login via Email OTP</h2>
+  <input type="email" id="email" placeholder="Enter your email">
+  <button onclick="sendOtp()">Send OTP</button>
+  <input type="text" id="otp" placeholder="Enter OTP">
+  <button onclick="verifyOtp()">Verify & Login</button>
+
+  <script>
+    function sendOtp() {
+      const email = document.getElementById('email').value;
+      fetch('https://your-backend.onrender.com/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      }).then(res => res.text()).then(alert);
+    }
+
+    function verifyOtp() {
+      const email = document.getElementById('email').value;
+      const otp = document.getElementById('otp').value;
+      fetch('https://your-backend.onrender.com/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp })
+      }).then(res => {
+        if (res.ok) {
+          alert("Login successful!");
+          window.location.href = "login.html";
+        } else {
+          res.text().then(alert);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
