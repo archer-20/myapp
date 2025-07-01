@@ -4,188 +4,244 @@
   <meta charset="UTF-8">
   <title>myMotorPolicy - Bike Manufacturer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+  <!-- AOS for scroll animations -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f9f9f9;
+      font-family: 'Georgia', serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: white;
       overflow-x: hidden;
     }
 
+    .parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      z-index: -1;
+      background: linear-gradient(120deg, #000428, #004e92, #000428);
+      background-size: 600% 600%;
+      animation: moveBackground 30s ease infinite;
+      transform: translateZ(-1px) scale(1.5);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    @keyframes moveBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     h1.title {
-      background: linear-gradient(to right, #0C68A7, #46A5E5);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       font-size: 36px;
       text-align: center;
       margin-top: 40px;
-      animation: fadeInDown 1s ease-out;
+      color: #0C68A7;
     }
 
-    .form-container,
-    .input-box {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .form-container, .input-box {
+      background-color: #111;
+      border-radius: 20px;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(12, 104, 167, 0.2);
     }
 
-    .form-container:hover,
-    .input-box:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    select, input {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #000;
+      padding: 12px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      width: 100%;
+      margin-bottom: 20px;
+      font-size: 16px;
     }
 
-    select:focus,
-    input:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.4);
-      transition: box-shadow 0.2s ease-in-out;
+    .button-container button {
+      background-color: #0C68A7;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      animation: glow 1.5s infinite alternate;
+      transition: transform 0.3s;
     }
 
     .button-container button:hover {
-      background-color: #034a86;
       transform: scale(1.05);
-      transition: 0.3s ease;
     }
 
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease;
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 5px #0C68A7, 0 0 10px #0C68A7;
+      }
+      to {
+        box-shadow: 0 0 10px #0C68A7, 0 0 20px #0C68A7;
+      }
     }
 
-    .fade-up.reveal {
-      opacity: 1;
-      transform: translateY(0);
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #ccc;
+    }
+
+    .error {
+      color: #ff4d4d;
+      font-size: 14px;
+      display: none;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      background-color: #000;
+      padding: 40px 5%;
+      color: #ccc;
+    }
+
+    footer div {
+      min-width: 150px;
+      margin: 10px;
+    }
+
+    footer h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    footer p, footer a {
+      margin: 4px 0;
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-logo img {
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    .footer-logo span {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .form-container, .input-box {
+        width: 90%;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1 class="title">What Is Your Bike Manufacturer?</h1>
+  <div class="parallax-bg"></div>
 
-  <!-- Brand/Model/Variant Form -->
-  <div class="form-container fade-up max-w-4xl bg-white mx-auto mt-8 p-6 rounded-3xl">
+  <h1 class="title" data-aos="fade-down">What Is Your Bike Manufacturer?</h1>
+
+  <div class="form-container" data-aos="fade-up">
     <div class="dropdowns flex flex-wrap gap-4 justify-between mb-6">
-      <select class="w-full sm:w-[30%] p-3 rounded-xl border">
+      <select>
         <option>Brand Name (e.g. Honda)</option>
       </select>
-      <select class="w-full sm:w-[30%] p-3 rounded-xl border">
+      <select>
         <option>Model Name (e.g. Shine)</option>
       </select>
-      <select class="w-full sm:w-[30%] p-3 rounded-xl border">
+      <select>
         <option>Variant Name (e.g. Disc)</option>
       </select>
     </div>
     <div class="button-container text-right">
-      <button onclick="saveAndContinue()" class="bg-blue-900 text-white px-6 py-3 rounded-xl hover:bg-blue-800 transition-all">Continue →</button>
+      <button onclick="saveAndContinue()">Continue →</button>
     </div>
   </div>
 
-  <!-- Phone/RC Input Form -->
-  <div class="input-box fade-up max-w-4xl bg-white mx-auto mt-6 p-6 rounded-3xl mb-20">
+  <div class="input-box" data-aos="fade-up">
     <div class="input-group mb-6">
-      <label for="phone" class="font-semibold">Phone Number <span class="text-gray-500 text-sm">(required)</span></label>
+      <label for="phone">Phone Number <span style="font-weight: normal; color: gray;">(required)</span></label>
       <div class="phone-wrapper flex items-center border border-gray-300 rounded-xl overflow-hidden mt-1">
-        <span class="bg-gray-100 px-4 py-2 border-r border-gray-300 text-gray-700">(IND +91)</span>
-        <input type="text" id="phone" name="phone" class="flex-1 p-3 text-base" placeholder="xxxxxxxxxx">
+        <span style="background-color: #222; padding: 12px; border-right: 1px solid #444;">(IND +91)</span>
+        <input type="text" id="phone" name="phone" placeholder="xxxxxxxxxx">
       </div>
-      <div class="error text-red-500 text-sm mt-2 hidden" id="phoneError">Enter a valid number</div>
+      <div class="error" id="phoneError">Enter a valid number</div>
     </div>
 
     <div class="input-group">
-      <label for="rc" class="font-semibold">Name As Per Registration Certificate (RC) <span class="text-gray-500 text-sm">(required)</span></label>
-      <div class="rc-wrapper mt-1 border border-gray-300 rounded-xl overflow-hidden">
-        <input type="text" id="rc" name="rc" class="w-full p-3 text-base" placeholder="John Dear">
-      </div>
+      <label for="rc">Name As Per Registration Certificate (RC) <span style="font-weight: normal; color: gray;">(required)</span></label>
+      <input type="text" id="rc" name="rc" placeholder="John Dear">
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="bg-white px-8 py-12 border-t">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center space-y-10 md:space-y-0">
-      <div class="flex items-center space-x-3">
-        <img src="logo7.png" alt="Logo" class="w-8 h-8" />
-        <h1 class="text-xl font-bold">myMotorPolicy</h1>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-12 text-sm">
-        <div>
-          <h3 class="font-semibold text-lg mb-2">About</h3>
-          <ul class="space-y-2">
-            <li><a href="#" class="hover:underline">Team</a></li>
-            <li><a href="#" class="hover:underline">History</a></li>
-            <li><a href="#" class="hover:underline">Careers</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-semibold text-lg mb-2">Privacy</h3>
-          <ul class="space-y-2">
-            <li><a href="#" class="hover:underline">Privacy Policy</a></li>
-            <li><a href="#" class="hover:underline">Terms and Conditions</a></li>
-            <li><a href="#" class="hover:underline">Contact Us</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-semibold text-lg mb-2">Social</h3>
-          <ul class="space-y-2">
-            <li><a href="#" class="hover:underline">Instagram</a></li>
-            <li><a href="#" class="hover:underline">Twitter/X</a></li>
-          </ul>
-        </div>
-      </div>
+  <footer data-aos="fade-up">
+    <div class="footer-logo">
+      <img src="logo7.png" alt="Logo">
+      <span>myMotorPolicy</span>
     </div>
-
-    <div class="mt-8 text-sm text-gray-600 text-left">
-      <p>&copy; Designed with <span class="text-pink-500 text-lg animate-bounce">😍</span> in INDIA.</p>
+    <div>
+      <h3>About</h3>
+      <p>Team</p>
+      <p>History</p>
+      <p>Careers</p>
+    </div>
+    <div>
+      <h3>Privacy</h3>
+      <p>Privacy Policy</p>
+      <p>Terms and Conditions</p>
+      <p>Contact Us</p>
+    </div>
+    <div>
+      <h3>Social</h3>
+      <p>Instagram</p>
+      <p>Twitter/X</p>
     </div>
   </footer>
 
-  <!-- Validation & Scroll Animation -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    function validateForm() {
-      const phoneInput = document.getElementById('phone');
-      const phoneError = document.getElementById('phoneError');
-      const phoneValue = phoneInput.value.trim();
-      const digitsOnly = phoneValue.replace(/\D/g, '');
+    AOS.init({ duration: 1000, once: false });
 
-      if (digitsOnly.length < 10) {
-        phoneError.classList.remove('hidden');
+    function saveAndContinue() {
+      const phone = document.getElementById('phone').value;
+      const rc = document.getElementById('rc').value;
+      const vehicle = localStorage.getItem("vehicle");
+
+      if (phone.trim().length < 10) {
+        document.getElementById('phoneError').style.display = 'block';
+        return;
       } else {
-        phoneError.classList.add('hidden');
-        alert('Form submitted successfully!');
+        document.getElementById('phoneError').style.display = 'none';
       }
+
+      fetch('/submit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ phone, rc, vehicle })
+      }).then(() => window.location.href = "/4page16.html");
     }
-
-    // Scroll reveal animation
-    const fadeEls = document.querySelectorAll('.fade-up');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('reveal');
-        }
-      });
-    }, {
-      threshold: 0.1
-    });
-
-    fadeEls.forEach(el => observer.observe(el));
   </script>
-
-
-<script>
-  function saveAndContinue() {
-    const phone = document.getElementById('phone').value;
-    const rc = document.getElementById('rc').value;
-    const vehicle = localStorage.getItem("vehicle");
-
-    fetch('/submit', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ phone, rc, vehicle })
-    }).then(() => window.location.href = "/4page16.html");
-  }
-</script>
 
 </body>
 </html>
